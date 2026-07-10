@@ -72,18 +72,33 @@ function StaticOrb() {
   );
 }
 
+// WebGL context creation can fail on real machines (disabled by policy, a
+// blocking extension, a blacklisted GPU) — not just headless test runners.
+// react-three-fiber surfaces that failure as an unhandled promise rejection
+// rather than a catchable render error, so it has to be checked up front.
+function supportsWebGL(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(canvas.getContext("webgl2") || canvas.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
 export function HeroBlob({ state = "idle" }: { state?: BlobState }) {
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [webglOk, setWebglOk] = useState(true);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     setReducedMotion(mq.matches);
     const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
     mq.addEventListener("change", listener);
+    setWebglOk(supportsWebGL());
     return () => mq.removeEventListener("change", listener);
   }, []);
 
-  if (reducedMotion) return <StaticOrb />;
+  if (reducedMotion || !webglOk) return <StaticOrb />;
 
   return (
     <Canvas camera={{ position: [0, 0, 4], fov: 40 }} gl={{ antialias: true, alpha: true }}>
