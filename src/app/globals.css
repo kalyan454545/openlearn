@@ -191,6 +191,43 @@
   color: transparent;
 }
 
+/* Category card hover: border animates to a rotating iridescent conic
+   gradient instead of just a color change — the one bit of "alive" motion
+   this component gets. Built as a padded gradient background rather than a
+   real border so the gradient itself can rotate smoothly via @keyframes. */
+@keyframes iridescent-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.card-iridescent-border {
+  position: relative;
+  background: var(--void-raised);
+  border: 1px solid var(--rule);
+}
+.card-iridescent-border::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--angle), var(--glow-pink), var(--glow-purple), #4dc4ff, var(--glow-pink));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 200ms ease-out;
+}
+.card-iridescent-border:hover::before {
+  opacity: 1;
+  animation: iridescent-spin 3s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
