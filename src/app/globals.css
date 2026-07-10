@@ -7,18 +7,20 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  /* "The Open Stacks" — library card catalog palette. */
+  /* Scale-style dark/iridescent palette — see CATEGORY comment in :root. */
+  --color-void: var(--void);
+  --color-void-raised: var(--void-raised);
+  --color-ink-purple: var(--ink-purple);
   --color-paper: var(--paper);
-  --color-paper-raised: var(--paper-raised);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-moss: var(--moss);
-  --color-brass: var(--brass);
+  --color-paper-soft: var(--paper-soft);
+  --color-glow-purple: var(--glow-purple);
+  --color-glow-pink: var(--glow-pink);
   --color-rule: var(--rule);
-  --font-sans: var(--font-sans);
-  --font-serif: var(--font-serif);
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+  --font-sans: "General Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-mono);
-  --font-heading: var(--font-serif);
+  --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -58,92 +60,105 @@
 }
 
 :root {
-  /* "The Open Stacks" — a library card-catalog aesthetic. Paper, ink, and
-     one brass accent used sparingly for active/focus states only. */
-  --paper: #f2ecdf;
-  --paper-raised: #fbf8f1;
-  --ink: #1e2a32;
-  --ink-soft: #4a5a63;
-  --moss: #4c6b52;
-  --brass: #b8863e;
-  --rule: #d8cfbc;
+  /* Scale-AI-style dark/iridescent system. The page is 95% quiet dark space;
+     glow-purple/glow-pink are reserved for the hero blob, gradient text, and
+     glass-card hover accents only — never flat background fills.
+     NOTE: this design is dark-by-default, not a light/dark pair — a "light
+     mode" version of glowing iridescent-on-void doesn't really exist as a
+     concept (same as Scale AI's own site has no light mode). The .dark class
+     below is kept only so next-themes' toggle doesn't break; both are
+     visually identical until/unless a real light variant is designed. */
+  --void: #0a0612;
+  --void-raised: #12091f;
+  --ink-purple: #1a0f2e;
+  --paper: #f5f0ff;
+  --paper-soft: rgba(245, 240, 255, 0.55);
+  --glow-purple: #b84dff;
+  --glow-pink: #ff4da6;
+  --rule: rgba(245, 240, 255, 0.06);
+  /* "Rich glass" — frosted, translucent panels: nav CTA, cards, screenshots'
+     frames. Backdrop-blur + soft inner highlight, never a flat opaque fill. */
+  --glass-bg: rgba(245, 240, 255, 0.05);
+  --glass-border: rgba(245, 240, 255, 0.14);
 
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --card: var(--paper-raised);
-  --card-foreground: var(--ink);
-  --popover: var(--paper-raised);
-  --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: var(--paper);
-  --secondary: var(--paper-raised);
-  --secondary-foreground: var(--ink);
-  --muted: var(--paper-raised);
-  --muted-foreground: var(--ink-soft);
-  --accent: var(--brass);
+  --background: var(--void);
+  --foreground: var(--paper);
+  --card: var(--void-raised);
+  --card-foreground: var(--paper);
+  --popover: var(--void-raised);
+  --popover-foreground: var(--paper);
+  --primary: var(--paper);
+  --primary-foreground: var(--void);
+  --secondary: var(--void-raised);
+  --secondary-foreground: var(--paper);
+  --muted: var(--void-raised);
+  --muted-foreground: var(--paper-soft);
+  --accent: var(--glow-purple);
   --accent-foreground: var(--paper);
-  --destructive: oklch(0.577 0.245 27.325);
+  --destructive: oklch(0.704 0.191 22.216);
   --border: var(--rule);
   --input: var(--rule);
-  --ring: var(--brass);
+  --ring: var(--glow-purple);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: var(--void-raised);
+  --sidebar-foreground: var(--paper);
+  --sidebar-primary: var(--paper);
+  --sidebar-primary-foreground: var(--void);
+  --sidebar-accent: var(--void-raised);
+  --sidebar-accent-foreground: var(--paper);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--glow-purple);
 }
 
 .dark {
-  /* A reading room after hours — dark ink walls, warm paper-colored text,
-     same sparing brass accent. */
-  --paper: #1b2226;
-  --paper-raised: #232b30;
-  --ink: #ece4d3;
-  --ink-soft: #a8a396;
-  --moss: #7fa787;
-  --brass: #d1a25f;
-  --rule: #333c41;
+  /* Same void/glow system as :root — see the NOTE on :root above for why. */
+  --void: #0a0612;
+  --void-raised: #12091f;
+  --ink-purple: #1a0f2e;
+  --paper: #f5f0ff;
+  --paper-soft: rgba(245, 240, 255, 0.55);
+  --glow-purple: #b84dff;
+  --glow-pink: #ff4da6;
+  --rule: rgba(245, 240, 255, 0.06);
+  --glass-bg: rgba(245, 240, 255, 0.05);
+  --glass-border: rgba(245, 240, 255, 0.14);
 
-  --background: var(--paper);
-  --foreground: var(--ink);
-  --card: var(--paper-raised);
-  --card-foreground: var(--ink);
-  --popover: var(--paper-raised);
-  --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: var(--paper);
-  --secondary: var(--paper-raised);
-  --secondary-foreground: var(--ink);
-  --muted: var(--paper-raised);
-  --muted-foreground: var(--ink-soft);
-  --accent: var(--brass);
+  --background: var(--void);
+  --foreground: var(--paper);
+  --card: var(--void-raised);
+  --card-foreground: var(--paper);
+  --popover: var(--void-raised);
+  --popover-foreground: var(--paper);
+  --primary: var(--paper);
+  --primary-foreground: var(--void);
+  --secondary: var(--void-raised);
+  --secondary-foreground: var(--paper);
+  --muted: var(--void-raised);
+  --muted-foreground: var(--paper-soft);
+  --accent: var(--glow-purple);
   --accent-foreground: var(--paper);
   --destructive: oklch(0.704 0.191 22.216);
   --border: var(--rule);
   --input: var(--rule);
-  --ring: var(--brass);
+  --ring: var(--glow-purple);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar: var(--void-raised);
+  --sidebar-foreground: var(--paper);
+  --sidebar-primary: var(--paper);
+  --sidebar-primary-foreground: var(--void);
+  --sidebar-accent: var(--void-raised);
+  --sidebar-accent-foreground: var(--paper);
+  --sidebar-border: var(--rule);
+  --sidebar-ring: var(--glow-purple);
 }
 
 @layer base {
@@ -155,5 +170,32 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* "Rich glass" — the frosted, translucent surface used for the nav CTA,
+   cards, and screenshot frames. Backdrop-blur + a soft top inner highlight
+   (the light-catching edge real glass has), never a flat opaque fill. */
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: inset 0 1px 0 rgba(245, 240, 255, 0.12);
+}
+
+.text-gradient-iridescent {
+  background: linear-gradient(90deg, var(--glow-pink), var(--glow-purple), #4dc4ff, #80ff9c);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -1,24 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-// Inter for UI/body text, Fraunces (serif, high optical-size contrast) for
-// display headlines, JetBrains Mono for catalog "call numbers" and metadata —
-// the three-typeface system for the library card-catalog design language.
-const inter = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
-
-const fraunces = Fraunces({
-  variable: "--font-serif",
-  subsets: ["latin"],
-  weight: "variable", // needed so the opsz (optical size) axis can vary too
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-});
-
+// "Söhne" (requested in the brief) is a paid, licensed commercial typeface —
+// General Sans is the free alternative, served from Fontshare's free CDN
+// since it isn't on Google Fonts (so next/font/google can't load it).
+// JetBrains Mono (eyebrow labels/metadata) still comes from next/font/google.
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
@@ -38,8 +26,14 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${jetbrainsMono.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
