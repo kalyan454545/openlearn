@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { Inter, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
-// Inter for UI chrome, Fraunces (serif) for reading content (course text,
-// lesson bodies) — see the design language in the original project brief.
+// Inter for UI/body text, Fraunces (serif, high optical-size contrast) for
+// display headlines, JetBrains Mono for catalog "call numbers" and metadata —
+// the three-typeface system for the library card-catalog design language.
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
@@ -12,6 +13,14 @@ const inter = Inter({
 
 const fraunces = Fraunces({
   variable: "--font-serif",
+  subsets: ["latin"],
+  weight: "variable", // needed so the opsz (optical size) axis can vary too
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
@@ -29,7 +38,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
+      className={`${inter.variable} ${fraunces.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
